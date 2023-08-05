@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhatsAppApiMock.Web", "WhatsAppApiMock.Web\WhatsAppApiMock.Web.csproj", "{46061A94-0B03-4EA4-A27E-97FAB0ED961E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46061A94-0B03-4EA4-A27E-97FAB0ED961E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46061A94-0B03-4EA4-A27E-97FAB0ED961E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46061A94-0B03-4EA4-A27E-97FAB0ED961E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46061A94-0B03-4EA4-A27E-97FAB0ED961E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A4A52B03-1509-41A5-908B-00D3861D4323}
+	EndGlobalSection
+EndGlobal

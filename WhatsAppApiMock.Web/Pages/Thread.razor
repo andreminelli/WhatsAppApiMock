@@ -1,0 +1,56 @@
+﻿@page "/thread"
+
+@using System.Threading.Channels;
+
+@inject Channel<IncomingPayload> _channel
+
+<h3>Thread</h3>
+
+<div id="scrollbox">
+    @foreach (var item in _messages)
+    {
+        <div class="@item.CSS">
+            <div class="user">@item.Username</div>
+            <div class="msg">@item.Body</div>
+        </div>
+    }
+    <hr />
+@*    <textarea class="input-lg" placeholder="enter your comment" @bind="@_newMessage"></textarea>
+    <button class="btn btn-default" @onclick="@(() => SendAsync(_newMessage))">Send</button>
+*@
+</div>
+
+@code {
+    private Task _listenerMessagesTask;
+
+    private List<Message> _messages = new();
+
+    protected override Task OnInitializedAsync()
+    {
+        _listenerMessagesTask = Task.Run(async () =>
+        {
+            while (true)
+            {
+                var newMessage = await _channel.Reader.ReadAsync();
+                _messages.Add(
+                    new Message 
+                    {
+                        Mine = false,
+                        Username = newMessage.To,
+                        Body = newMessage.Text?.Body
+                    });
+                await InvokeAsync(StateHasChanged);
+            }                    });
+
+        return base.OnInitializedAsync();
+    }
+
+    private class Message
+    {
+        public string Username { get; init; }
+        public string Body { get; init; }
+        public bool Mine { get; init; }
+
+        public string CSS => Mine ? "sent" : "received";
+    }
+}
