@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using System.Threading.Channels;
 using WhatsAppApiMock.Web.Data;
 
@@ -8,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+
 builder.Services.AddSingleton(Channel.CreateUnbounded<IncomingPayload>());
 
 var app = builder.Build();

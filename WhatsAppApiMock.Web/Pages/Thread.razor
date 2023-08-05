@@ -1,4 +1,5 @@
 ﻿@page "/thread"
+@implements IAsyncDisposable
 
 @using System.Threading.Channels;
 
@@ -21,17 +22,34 @@
 </div>
 
 @code {
+    private CancellationTokenSource _runningCts = new();
+    private List<Message> _messages = new();
+
     private Task _listenerMessagesTask;
 
-    private List<Message> _messages = new();
+    public async ValueTask DisposeAsync()
+    {
+        _runningCts.Cancel();
+
+        if (_listenerMessagesTask is not null)
+        {
+            try
+            {
+                await _listenerMessagesTask;
+            }
+            catch { };
+        }
+
+        _runningCts.Dispose();
+    }
 
     protected override Task OnInitializedAsync()
     {
         _listenerMessagesTask = Task.Run(async () =>
         {
-            while (true)
+            while (!_runningCts.IsCancellationRequested)
             {
-                var newMessage = await _channel.Reader.ReadAsync();
+                var newMessage = await _channel.Reader.ReadAsync(_runningCts.Token);
                 _messages.Add(
                     new Message 
                     {
@@ -40,7 +58,8 @@
                         Body = newMessage.Text?.Body
                     });
                 await InvokeAsync(StateHasChanged);
-            }                    });
+            }            
+        });
 
         return base.OnInitializedAsync();
     }
