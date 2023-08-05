@@ -1,9 +1,16 @@
+using System.Text.Json.Serialization;
 using System.Threading.Channels;
 using WhatsAppApiMock.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services
+	.AddControllers()
+	.AddJsonOptions(options =>
+    {
+		options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+    });
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 

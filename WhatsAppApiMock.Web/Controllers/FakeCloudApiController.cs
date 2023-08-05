@@ -19,7 +19,13 @@ namespace WhatsAppApiMock.Web.Controllers
 		public async Task<IActionResult> Messages([FromBody] IncomingPayload payload)
 		{
 			await _channel.Writer.WriteAsync(payload);
-			return Ok();
+			return Ok(new Value
+			{ 
+				Messages = new[]
+				{
+					new Message { Id = $"gBEGkYiEB1VXAglK1ZEqA1YKPrU{DateTime.Now.Ticks}" } 
+				}
+			});
 		}
 	}
 }
